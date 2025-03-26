@@ -1,0 +1,1 @@
+{{-- <img src="assets/img/mudapedia/logo.mudapedia.png" alt="logo login" style="height: 80px; width: auto; display: block; margin: 0 auto;" /> --}}
