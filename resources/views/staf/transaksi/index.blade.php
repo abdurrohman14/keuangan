@@ -13,14 +13,15 @@
                         <div class="card-header">
                             <div class="d-flex align-items-center">
                                 <h4 class="card-title">Daftar Transaksi</h4>
-                                <button class="btn btn-primary btn-round ms-auto"><a
-                                        href="{{ route('staf.transaksi.create') }}" class="text-white">
+                                <button class="btn btn-primary btn-round ms-auto">
+                                    <a href="{{ route('staf.transaksi.create') }}" class="text-white">
                                         <i class="fa fa-plus"></i> Tambah Transaksi
+                                    </a>
                                 </button>
                             </div>
                         </div>
 
-                        <form id="filter-form" method="GET" action="{{ route('admin.transaksi') }}">
+                        <form id="filter-form" method="GET" action="{{ route('staf.transaksi') }}">
                             <div class="row">
                                 <div class="col-md-4">
                                     <div class="form-group mb-3">
@@ -60,11 +61,12 @@
                                             <th>Keterangan</th>
                                             <th>Rekening</th>
                                             <th>Jumlah</th>
+                                            <th>Status</th>
                                             <th>Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($transksi as $key => $transaksis)
+                                        @foreach ($transaksi as $key => $transaksis)
                                             <tr>
                                                 <td>{{ $key + 1 }}</td>
                                                 <td>{{ $transaksis->tanggal_transaksi }}</td>
@@ -76,7 +78,7 @@
                                                         class="btn btn-info btn-sm"><i
                                                             class="fas fa-pencil-alt"></i>Edit</a>
                                                     <form id="delete-form-{{ $transaksis->id }}"
-                                                        action="{{ route('admin.transaksi.delete', ['id' => $transaksis->id]) }}"
+                                                        action="{{ route('staf.transaksi.destroy', ['id' => $transaksis->id]) }}"
                                                         method="POST">
                                                         @csrf
                                                         @method('DELETE')

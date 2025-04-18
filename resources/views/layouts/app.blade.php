@@ -18,7 +18,7 @@
     </head>
     <body class="font-sans antialiased">
         <div class="wrapper">
-            <!-- Sidebar -->
+            <!-- Sidebar -->                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
             @include('layouts.sidebar')
 
             <!-- Content Wrapper -->

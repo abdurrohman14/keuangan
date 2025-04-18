@@ -3,6 +3,7 @@
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Manajer\TransaksismanajerController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Staf\JurnalUmumController;
 use App\Http\Controllers\Staf\TransaksisController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\KodeAkunController;
@@ -51,8 +52,8 @@ Route::middleware(['auth', 'role:stafkeuangan'])->group(function () {
 
     // Kode Akun
     Route::prefix('staf-kode-akun')->group(function() {
-        Route::get('/', [KodeAkunController::class, 'index'])->name('index.kodeAkun');
-        Route::post('/store', [KodeAkunController::class, 'store'])->name('kode.akun.store');
+        Route::get('/', [AkunController::class, 'index'])->name('index.kodeAkun');
+        Route::post('/store', [AkunController::class, 'store'])->name('kode.akun.store');
     });
     // Transaksi
     Route::prefix('staf-transaksi')->group(function () {
@@ -62,6 +63,15 @@ Route::middleware(['auth', 'role:stafkeuangan'])->group(function () {
         Route::get('/{id}/edit', [TransaksisController::class, 'edit'])->name('staf.transaksi.edit');
         Route::put('/{id}/update', [TransaksisController::class, 'update'])->name('staf.transaksi.update');
         Route::delete('/{id}', [TransaksisController::class, 'destroy'])->name('staf.transaksi.destroy');
+    });
+    // Jurnal Umum
+    Route::prefix('staf-jurnal-umum')->group(function() {
+        Route::get('/', [JurnalUmumController::class, 'index'])->name('staf.jurnal.umum');
+        // Route::get('/create', [JurnalUmumController::class, 'create'])->name('staf.jurnal.umum.create');
+        // Route::post('/store', [JurnalUmumController::class, 'store'])->name('staf.jurnal.umum.store');
+        // Route::get('/{id}/edit', [JurnalUmumController::class, 'edit'])->name('staf.jurnal.umum.edit');
+        // Route::put('/{id}/update', [JurnalUmumController::class, 'update'])->name('staf.jurnal.umum.update');
+        // Route::delete('/{id}', [JurnalUmamController::class, 'destroy'])->name('staf.jurnal.umum.destroy');
     });
 });
 

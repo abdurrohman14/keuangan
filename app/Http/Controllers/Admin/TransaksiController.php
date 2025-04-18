@@ -30,7 +30,7 @@ class TransaksiController extends Controller
 
         return view('admin.transaksi.index', [
             'title' => 'transaksi',
-            'transksi' => $transaksis,
+            'transaksi' => $transaksis,
             'tipeTransaksi' => $tipeTransaksiOptions,
         ]);
     }

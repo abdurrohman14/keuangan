@@ -3,7 +3,7 @@
     <div class="container">
         <div class="page-inner">
             <div class="page-header">
-                <h3 class="fw-bold mb-3">Transaksi</h3>
+                <h3 class="fw-bold mb-3">Junal Umum</h3>
             </div>
 
             <!-- Main content -->
@@ -12,15 +12,16 @@
                     <div class="card">
                         <div class="card-header">
                             <div class="d-flex align-items-center">
-                                <h4 class="card-title">Daftar Transaksi</h4>
-                                <button class="btn btn-primary btn-round ms-auto">
-                                    <a href="{{ route('admin.transaksi.create') }}" class="text-white">
-                                        <i class="fa fa-plus"></i> Tambah Transaksi
+                                <h4 class="card-title">Daftar Jurnal Umum</h4>
+                                {{-- <button class="btn btn-primary btn-round ms-auto">
+                                    <a href="" class="text-white">
+                                        <i class="fa fa-plus"></i> Tambah Transaksi jurnal
                                     </a>
-                                </button>
+                                </button> --}}
                             </div>
                         </div>
-                        <form id="filter-form" method="GET" action="{{ route('admin.transaksi') }}">
+
+                        {{-- <form id="filter-form" method="GET" action="{{ route('staf.jurnal.umum') }}">
                             <div class="row">
                                 <div class="col-md-4">
                                     <div class="form-group mb-3">
@@ -46,8 +47,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </form>
-
+                        </form> --}}
 
                         <!-- card header -->
                         <div class="card-body">
@@ -57,35 +57,35 @@
                                         <tr>
                                             <th>No</th>
                                             <th>Tanggal</th>
-                                            <th>Kode Akun</th>
                                             <th>Keterangan</th>
-                                            <th>Rekening</th>
-                                            <th>Jumlah</th>
-                                            <th>Aksi</th>
+                                            <th>Nama Akun</th>
+                                            <th>Debit</th>
+                                            <th>Kredit</th>
+                                            <th>Status</th>
+                                            {{-- <th>Aksi</th> --}}
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($transaksi as $key => $transaksis)
+                                        @foreach ($jurnalUmum as $key => $jU)
                                             <tr>
                                                 <td>{{ $key + 1 }}</td>
-                                                <td>{{ $transaksis->tanggal_transaksi }}</td>
-                                                <td>{{ $transaksis->akun->kode }} - {{ $transaksis->akun->nama_akun }}</td>
-                                                <td>{{ $transaksis->keterangan }}</td>
-                                                <td>{{ $transaksis->rekening }}</td>
-                                                <td>{{ $transaksis->jumlah }}</td>
-                                                <td><a href="{{ route('admin.transaksi.edit', ['id' => $transaksis->id]) }}"
+                                                <td>{{ $jU->tanggal_transaksi }}</td>
+                                                <td>{{ $jU->keterangan }}</td>
+                                                <td>{{ $jU->akun->kode }} - {{ $jU->akun->nama_akun }}</td>
+                                                <td>{{ $jU->status }}</td>
+                                                {{-- <td><a href="{{ route('staf.jurnalUmum.edit', ['id' => $jurnalUmum->id]) }}"
                                                         class="btn btn-info btn-sm"><i
-                                                            class="fas fa-pencil-alt"></i>edit</a>
-                                                    <form id="delete-form-{{ $transaksis->id }}"
-                                                        action="{{ route('admin.transaksi.delete', ['id' => $transaksis->id]) }}"
+                                                            class="fas fa-pencil-alt"></i>Edit</a>
+                                                    <form id="delete-form-{{ $jurnalUmum->id }}"
+                                                        action="{{ route('staf.jurnalUmum.destroy', ['id' => $jurnalUmum->id]) }}"
                                                         method="POST">
                                                         @csrf
                                                         @method('DELETE')
-                                                        <button onclick="confirmDelete(event, {{ $transaksis->id }})"
+                                                        <button onclick="confirmDelete(event, {{ $jurnalUmum->id }})"
                                                             type="submit" class="btn btn-sm btn-danger"><i
                                                                 class="fas fa-trash"></i>Hapus</button>
                                                     </form>
-                                                </td>
+                                                </td> --}}
                                             </tr>
                                         @endforeach
                                     </tbody>
@@ -97,38 +97,4 @@
             </div>
         </div>
     </div>
-
-    <!-- Modal Delete-->
-    {{-- <div class="modal fade" id="modal-delete" tabindex="-1" role="dialog" aria-labelledby="modal-delete-label"
-        aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header border-0">
-                    <h5 class="modal-title" id="modal-delete-label">Konfirmasi Hapus</h5>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <p>Anda yakin ingin menghapus transaksi ini?</p>
-                </div>
-                <div class="modal-footer border-0">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                    <form id="delete-form" action="" method="POST" style="display:inline;">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="btn btn-danger">Hapus</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div> --}}
-
-    {{-- <script>
-        $(document).on('click', '.delete-button', function() {
-            var id = $(this).data('id');
-            var form = $('#delete-form');
-            form.attr('action', '/admin-transaksi/' + id);
-        });
-    </script> --}}
 @endsection

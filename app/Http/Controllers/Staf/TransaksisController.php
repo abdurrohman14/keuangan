@@ -31,7 +31,7 @@ class TransaksisController extends Controller
 
         return view('staf.transaksi.index', [
             'title' => 'transaksi',
-            'transksi' => $transaksis,
+            'transaksi' => $transaksis,
             'tipeTransaksi' => $tipeTransaksiOptions,
         ]);
     }
@@ -39,7 +39,7 @@ class TransaksisController extends Controller
     public function create()
     {
         $akun = Akun::all();
-        $tipeTransaksi = ['Pemasukan', 'Pengeluaran'];
+        $tipeTransaksi = ['Penerimaan', 'Pengeluaran'];
             return view('staf.transaksi.create',[
                 'title' => 'Tambah Transaksi',
                 'akun' => $akun,
@@ -76,10 +76,14 @@ class TransaksisController extends Controller
 
     public function edit($id)
     {
+        $akun = Akun::all();
         $transaksi = Transaksi::find($id);
-        return view('staf.transaksi.edit',[
+        $tipeTransaksi = ['Penerimaan', 'Pengeluaran'];
+        return view('staf.transaksi.edit', [
             'title' => 'Edit Transaksi',
+            'akun' => $akun,
             'transaksi' => $transaksi,
+            'tipeTransaksi' => $tipeTransaksi,
         ]);
     }
 
@@ -90,6 +94,7 @@ class TransaksisController extends Controller
             'tanggal_transaksi' => 'required|date',
             'tipe_transaksi' => 'required|in:penerimaan,pengeluaran',
             'rekening' => 'required|string|max:255',
+            'keterangan' => 'required|string|max:255',
             'jumlah' => 'required|numeric|min:0',
         ]);
 
@@ -101,9 +106,9 @@ class TransaksisController extends Controller
                 'keterangan' => $request->keterangan ?? null,
                 'jumlah' => $request->jumlah,
             ]);
-            return redirect()->route('index.transaksi')->with('success', 'Transaksi Berhasil Diubah');
+            return redirect()->route('staf.transaksi')->with('success', 'Transaksi Berhasil Diubah');
         } catch (\Throwable $e) {
-            return redirect()->route('index.transaksi')->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
+            return redirect()->route('staf.transaksi')->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
         }
     }
 
@@ -111,14 +116,14 @@ class TransaksisController extends Controller
     {
         try {
             $transaksi = Transaksi::find($id);
-            if (!$transaksi) {
-                return redirect()->route('index.transaksi')->with('error','transaksi tidak ditemukan');
-            }
+            // if (!$transaksi) {
+            //     return redirect()->route('index.transaksi')->with('error','transaksi tidak ditemukan');
+            // }
 
             $transaksi->delete();
-            return redirect()->route('index.transaksi')->with('success','transaksi berhasil dihapus');
+            return redirect()->route('staf.transaksi')->with('success','transaksi berhasil dihapus');
         } catch (\Exception $e) {
-            return redirect()->route('index.transaksi')->with('error','Terjadi kesalahan: ' . $e->getMessage());
+            return redirect()->route('staf.transaksi')->with('error','Terjadi kesalahan: ' . $e->getMessage());
         }
     }
 }
