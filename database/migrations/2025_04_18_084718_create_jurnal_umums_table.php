@@ -11,15 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('transaksis', function (Blueprint $table) {
+        Schema::create('jurnal_umums', function (Blueprint $table) {
             $table->id();
+            $table->date('tanggal');
             $table->foreignId('akun_id')->references('id')->on('akuns')->onDelete('cascade');
-            $table->date('tanggal_transaksi');
-            $table->string('tipe_transaksi');
-            $table->string('rekening');
-            $table->string('keterangan');
-            $table->float('jumlah');
-            $table->enum('status', ['selesai', 'draf'])->default('draf');
+            $table->foreignId('transaksi_id')->references('id')->on('transaksis')->onDelete('cascade');
+            $table->double('debit');
+            $table->double('kredit');
+            $table->text('keterangan');
             $table->timestamps();
         });
     }
@@ -29,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('transaksis');
+        Schema::dropIfExists('jurnal_umums');
     }
 };

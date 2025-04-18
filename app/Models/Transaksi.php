@@ -14,7 +14,8 @@ class Transaksi extends Model
         'tipe_transaksi',
         'rekening',
         'keterangan',
-        'jumlah'
+        'jumlah',
+        'status',
     ];
 
     public function akun(){

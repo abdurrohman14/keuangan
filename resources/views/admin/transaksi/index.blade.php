@@ -20,6 +20,7 @@
                                 </button>
                             </div>
                         </div>
+                        
                         <form id="filter-form" method="GET" action="{{ route('admin.transaksi') }}">
                             <div class="row">
                                 <div class="col-md-4">
@@ -61,6 +62,7 @@
                                             <th>Keterangan</th>
                                             <th>Rekening</th>
                                             <th>Jumlah</th>
+                                            <th>Status</th>
                                             <th>Aksi</th>
                                         </tr>
                                     </thead>
@@ -73,6 +75,17 @@
                                                 <td>{{ $transaksis->keterangan }}</td>
                                                 <td>{{ $transaksis->rekening }}</td>
                                                 <td>{{ $transaksis->jumlah }}</td>
+                                                <td>
+                                                    @if ($transaksis->status === 'draf')
+                                                        <!-- Membuat teks Draf yang dapat diklik -->
+                                                        <a href="{{ route('admin.transaksi.verifikasi', $transaksis->id) }}"
+                                                            class="badge bg-warning text-dark" style="cursor: pointer;">
+                                                            Draf
+                                                        </a>
+                                                    @else
+                                                        <span class="badge bg-success">Selesai</span>
+                                                    @endif
+                                                </td>
                                                 <td><a href="{{ route('admin.transaksi.edit', ['id' => $transaksis->id]) }}"
                                                         class="btn btn-info btn-sm"><i
                                                             class="fas fa-pencil-alt"></i>edit</a>

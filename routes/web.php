@@ -1,15 +1,16 @@
 <?php
 
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\Manajer\TransaksismanajerController;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\Staf\JurnalUmumController;
-use App\Http\Controllers\Staf\TransaksisController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Admin\KodeAkunController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Admin\JuController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Staf\AkunController;
 use App\Http\Controllers\Manajer\KodeController;
+use App\Http\Controllers\Admin\KodeAkunController;
 use App\Http\Controllers\Admin\TransaksiController;
+use App\Http\Controllers\Staf\JurnalUmumController;
+use App\Http\Controllers\Staf\TransaksisController;
+use App\Http\Controllers\Manajer\TransaksismanajerController;
 
 Route::get('/', function () {
     return view('auth.login');
@@ -43,6 +44,11 @@ Route::middleware(['auth', 'role:admin'])->group(function() {
         Route::get('/{id}/edit', [TransaksiController::class, 'edit'])->name('admin.transaksi.edit');
         Route::put('/{id}/update', [TransaksiController::class, 'update'])->name('admin.transaksi.update');
         Route::delete('/{id}', [TransaksiController::class, 'delete'])->name('admin.transaksi.delete');
+        Route::get('/verifikasi/{id}', [TransaksiController::class, 'verifikasi'])->name('admin.transaksi.verifikasi');
+    });
+    // Jurnal Umum
+    Route::prefix('jurnal-umum')->group(function () {
+        Route::get('/', [JuController::class, 'index'])->name('admin.jurnal');
     });
 });
 

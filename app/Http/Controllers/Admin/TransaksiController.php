@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
 use App\Models\Akun;
-use Illuminate\Http\Request;
 use App\Models\Transaksi;
+use App\Models\jurnalUmum;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
 class TransaksiController extends Controller
@@ -58,14 +59,30 @@ class TransaksiController extends Controller
                 'jumlah' => 'required|numeric|min:0',
             ]);
 
-            Transaksi::create([
+            $transaksi = Transaksi::create([
                 'akun_id' => $request->akun_id,
                 'tanggal_transaksi' => $request->tanggal_transaksi,
                 'tipe_transaksi' => $request->tipe_transaksi,
                 'rekening' => $request->rekening,
                 'keterangan' => $request->keterangan ?? null,
                 'jumlah' => $request->jumlah,
+                'status' => 'draf',
             ]);
+
+            // Simpan jurnal umum, nilai debit/kredit tergantung tipe_transaksi
+            $debit = $request->tipe_transaksi == 'Penerimaan' ? $request->jumlah : 0;
+            $kredit = $request->tipe_transaksi == 'Pengeluaran' ? $request->jumlah : 0;
+
+            if ($transaksi->status === 'selesai') {
+                jurnalUmum::create([
+                    'akun_id' => $request->akun_id,
+                    'transaksi_id' => $transaksi->id,
+                    'tanggal' => $request->tanggal_transaksi,
+                    'debit' => $debit,
+                    'kredit' => $kredit,
+                    'keterangan' => $request->keterangan,
+                ]);
+            }
 
             return redirect()->route('admin.transaksi')->with('success', 'Data berhasil disimpan!');
         } catch (\Throwable $e) {
@@ -125,6 +142,37 @@ class TransaksiController extends Controller
 
             $transaksi->delete();
             return redirect()->route('admin.transaksi')->with('success', 'transaksi berhasil dihapus');
+        } catch (\Exception $e) {
+            return redirect()
+                ->route('admin.transaksi')
+                ->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
+        }
+    }
+
+    public function verifikasi($id)
+    {
+        try {
+            $transaksi = Transaksi::findOrFail($id);
+
+            if ($transaksi->status === 'selesai') {
+                return redirect()->route('admin.transaksi')->with('info', 'Transaksi sudah diverifikasi sebelumnya.');
+            }
+
+            // Tambahkan ke jurnal_umum
+            \App\Models\JurnalUmum::create([
+                'akun_id' => $transaksi->akun_id,
+                'transaksi_id' => $transaksi->id,
+                'tanggal' => $transaksi->tanggal_transaksi,
+                'keterangan' => $transaksi->keterangan,
+                'debit' => $transaksi->tipe_transaksi === 'Penerimaan' ? $transaksi->jumlah : 0,
+                'kredit' => $transaksi->tipe_transaksi === 'Pengeluaran' ? $transaksi->jumlah : 0,
+            ]);
+
+            // Update status ke selesai
+            $transaksi->status = 'selesai';
+            $transaksi->save();
+
+            return redirect()->route('admin.transaksi')->with('success', 'Transaksi berhasil diverifikasi dan dimasukkan ke Jurnal Umum!');
         } catch (\Exception $e) {
             return redirect()
                 ->route('admin.transaksi')

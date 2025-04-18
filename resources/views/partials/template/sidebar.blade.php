@@ -55,7 +55,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a data-bs-toggle="collapse" href="#sidebarLayouts">
+                        <a href="{{ route('admin.jurnal') }}">
                             <i class="fas fa-pen-square"></i>
                             <p>Jurnal</p>
                         </a>
