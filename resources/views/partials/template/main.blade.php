@@ -127,17 +127,27 @@
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11">
-    </script>
-    @if (session('success'))
     <script>
-        Swal.fire({
-            icon: 'success',
-            title: 'Berhasil!',
-            type: 'success',
-            text: '{{ Session::get('success') }}'
+        document.addEventListener('DOMContentLoaded', function() {
+            @if (session('success'))
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Berhasil',
+                    text: '{{ session('success') }}',
+                    confirmButtonText: 'OK',
+                });
+            @endif
+
+            @if (session('error'))
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Gagal',
+                    text: '{{ session('error') }}',
+                    confirmButtonText: 'OK',
+                });
+            @endif
         });
     </script>
-    @endif
 
     <script>
       function confirmDelete(event, id) {

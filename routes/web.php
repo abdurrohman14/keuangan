@@ -8,7 +8,8 @@ use App\Http\Controllers\Staf\AkunController;
 use App\Http\Controllers\Manajer\KodeController;
 use App\Http\Controllers\Admin\KodeAkunController;
 use App\Http\Controllers\Admin\TransaksiController;
-use App\Http\Controllers\Staf\JurnalUmumController;
+use App\Http\Controllers\Staf\JnController;
+use App\Http\Controllers\Manajer\JmController;
 use App\Http\Controllers\Staf\TransaksisController;
 use App\Http\Controllers\Manajer\TransaksismanajerController;
 
@@ -72,7 +73,7 @@ Route::middleware(['auth', 'role:stafkeuangan'])->group(function () {
     });
     // Jurnal Umum
     Route::prefix('staf-jurnal-umum')->group(function() {
-        Route::get('/', [JurnalUmumController::class, 'index'])->name('staf.jurnal.umum');
+        Route::get('/', [JnController::class, 'index'])->name('staf.jurnal');
         // Route::get('/create', [JurnalUmumController::class, 'create'])->name('staf.jurnal.umum.create');
         // Route::post('/store', [JurnalUmumController::class, 'store'])->name('staf.jurnal.umum.store');
         // Route::get('/{id}/edit', [JurnalUmumController::class, 'edit'])->name('staf.jurnal.umum.edit');
@@ -91,4 +92,7 @@ Route::middleware(['auth', 'role:manajer'])->group(function () {
     Route::prefix('manajer-transaksi')->group(function () {
         Route::get('/', [TransaksismanajerController::class, 'index'])->name('manajer.transaksi');
     });    
+    Route::prefix('manajer-jurnal-umum')->group(function () {
+        Route::get('/', [JmController::class, 'index'])->name('manajer.jurnal');
+    });   
 });

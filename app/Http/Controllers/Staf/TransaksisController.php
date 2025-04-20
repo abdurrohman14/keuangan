@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Staf;
 
 use App\Models\Akun;
 use App\Models\Transaksi;
-use App\Models\Transaksis;
+use App\Models\jurnalUmum;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -59,14 +59,30 @@ class TransaksisController extends Controller
             'jumlah' => 'required|numeric|min:0',
         ]);
 
-        Transaksi::create([
+        $transaksi = Transaksi::create([
             'akun_id' => $request->akun_id,
             'tanggal_transaksi' => $request->tanggal_transaksi,
             'tipe_transaksi' => $request->tipe_transaksi,
             'rekening' => $request->rekening,
             'keterangan' => $request->keterangan ?? null, 
             'jumlah' => $request->jumlah,
+            'status' => 'draf',
         ]);
+
+         // Simpan jurnal umum, nilai debit/kredit tergantung tipe_transaksi
+         $debit = $request->tipe_transaksi == 'Penerimaan' ? $request->jumlah : 0;
+         $kredit = $request->tipe_transaksi == 'Pengeluaran' ? $request->jumlah : 0;
+
+         if ($transaksi->status === 'selesai') {
+             jurnalUmum::create([
+                 'akun_id' => $request->akun_id,
+                 'transaksi_id' => $transaksi->id,
+                 'tanggal' => $request->tanggal_transaksi,
+                 'debit' => $debit,
+                 'kredit' => $kredit,
+                 'keterangan' => $request->keterangan,
+             ]);
+         }
 
         return redirect()->route('staf.transaksi')->with('success', 'Data berhasil disimpan!');
     } catch (\Throwable $e) {  

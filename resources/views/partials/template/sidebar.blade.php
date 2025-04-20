@@ -113,7 +113,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a  href="{{ route('staf.jurnal.umum') }}">
+                        <a  href="{{ route('staf.jurnal') }}">
                             <i class="fas fa-pen-square"></i>
                             <p>Jurnal</p>
                         </a>
@@ -171,7 +171,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a data-bs-toggle="collapse" href="#forms">
+                        <a  href="{{ route('manajer.jurnal') }}">
                             <i class="fas fa-pen-square"></i>
                             <p>Jurnal</p>
                         </a>

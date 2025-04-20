@@ -74,7 +74,18 @@
                                                 <td>{{ $transaksis->keterangan }}</td>
                                                 <td>{{ $transaksis->rekening }}</td>
                                                 <td>{{ $transaksis->jumlah }}</td>
-                                                <td><a href="{{ route('staf.transaksi.edit', ['id' => $transaksis->id]) }}"
+                                                <td>
+                                                    @if ($transaksis->status === 'draf')
+                                                        <!-- Membuat teks Draf yang dapat diklik -->
+                                                        <a href="{{ route('staf.transaksi.verifikasi', $transaksis->id) }}"
+                                                            class="badge bg-warning text-dark" style="cursor: pointer;">
+                                                            Draf
+                                                        </a>
+                                                    @else
+                                                        <span class="badge bg-success">Selesai</span>
+                                                    @endif
+                                                </td>
+                                                    <td><a href="{{ route('staf.transaksi.edit', ['id' => $transaksis->id]) }}"
                                                         class="btn btn-info btn-sm"><i
                                                             class="fas fa-pencil-alt"></i>Edit</a>
                                                     <form id="delete-form-{{ $transaksis->id }}"

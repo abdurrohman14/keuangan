@@ -16,7 +16,7 @@
                             </div>
                         </div>
 
-                        <form action="{{ route('staf.jurnal') }}" method="GET">
+                        <form action="{{ route('manajer.jurnal') }}" method="GET">
                             <div class="row mb-3">
                                 <div class="col-md-4">
                                     <div class="form-group mb-3">
