@@ -3,7 +3,7 @@
     <div class="container">
         <div class="page-inner">
             <div class="page-header">
-                <h3 class="fw-bold mb-3">Jurnal Umum</h3>
+                <h3 class="fw-bold mb-3">Buku Besar</h3>
             </div>
 
             <!-- Main content -->
@@ -12,13 +12,31 @@
                     <div class="card">
                         <div class="card-header">
                             <div class="d-flex align-items-center">
-                                <h4 class="card-title">Daftar Jurnal Umum</h4>
+                                <h4 class="card-title">Daftar Buku Besar</h4>
+                                <button class="btn btn-primary btn-round ms-auto">
+                                    <a href="" class="text-white">
+                                        <i class="fa-solid fa-print"></i> Cetak
+                                    </a>
+                                </button>
                             </div>
                         </div>
 
-                        <form action="{{ route('admin.jurnal') }}" method="GET">
+                        <form action="{{ route('admin.buku') }}" method="GET">
                             <div class="row mb-3">
                                 <div class="col-md-4">
+                                    <div class="form-group mb-3">
+                                        <label for="akun_id" class="fw-bold">Akun</label>
+                                        <select name="akun_id" id="akun_id" class="form-control form-control-sm" onchange="this.form.submit()">
+                                            <option value="">-- Semua Akun --</option>
+                                            @foreach ($semuaAkun as $akun)
+                                                <option value="{{ $akun->id }}" {{ request('akun_id') == $akun->id ? 'selected' : '' }}>
+                                                    {{ $akun->kode }} - {{ $akun->nama_akun }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
                                     <div class="form-group mb-3">
                                         <label for="tanggal_awal" class="fw-bold">Tanggal Awal</label>
                                         <input type="date" class="form-control form-control-sm" id="tanggal_awal"
@@ -26,7 +44,7 @@
                                             onchange="this.form.submit()" />
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-2">
                                     <div class="form-group mb-3">
                                         <label for="tanggal_akhir" class="fw-bold">Tanggal Akhir</label>
                                         <input type="date" class="form-control form-control-sm" id="tanggal_akhir"
@@ -49,45 +67,20 @@
                                             <th>Kode Akun</th>
                                             <th>Debit</th>
                                             <th>Kredit</th>
-                                            <th>Status</th>
+                                            <th>Saldo</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @php
-                                            $no = 1;
-                                            $transaksiSebelumnya = null;
-                                        @endphp
-                                        @foreach ($jurnal as $key => $jU)
-                                            @php
-                                                $transaksiSekarang = $jU->tanggal . '|' . $jU->keterangan;
-                                            @endphp
+                                        @foreach ($buku as $key => $BukuBesar)
                                             <tr>
-                                                <td>
-                                                    @if ($transaksiSekarang !== $transaksiSebelumnya)
-                                                        {{ $no++ }}
-                                                    @endif
-                                                </td>
-                                                <td>{{ $jU->tanggal }}</td>
-                                                <td>{{ $jU->keterangan }}</td>
-                                                <td>{{ $jU->akun->kode }} - {{ $jU->akun->nama_akun }}</td>
-                                                <td>{{ $jU->debit }}</td>
-                                                <td>{{ $jU->kredit }}</td>
-                                                <td>
-                                                    @if ($transaksiSekarang !== $transaksiSebelumnya)
-                                                        @if ($jU->status === 'posting')
-                                                            <a href="{{ route('admin.jurnal.verifikasi', $jU->id) }}"
-                                                                class="badge bg-warning text-dark" style="cursor: pointer;">
-                                                                Posting
-                                                            </a>
-                                                        @else
-                                                            <span class="badge bg-success">Selesai</span>
-                                                        @endif
-                                                    @endif
-                                                </td>
+                                                <td>{{ $key + 1 }}</td>
+                                                <td>{{ $BukuBesar->tanggal }}</td>
+                                                <td>{{ $BukuBesar->keterangan }}</td>
+                                                <td>{{ $BukuBesar->akun->kode }} - {{ $BukuBesar->akun->nama_akun }}</td>
+                                                <td>{{ $BukuBesar->debit }}</td>
+                                                <td>{{ $BukuBesar->kredit }}</td>
+                                                <td>{{ $BukuBesar->saldo }}</td>
                                             </tr>
-                                            @php
-                                                $transaksiSebelumnya = $transaksiSekarang;
-                                            @endphp
                                         @endforeach
                                     </tbody>
                                 </table>

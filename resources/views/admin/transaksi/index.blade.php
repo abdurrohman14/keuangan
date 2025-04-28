@@ -4,6 +4,25 @@
         <div class="page-inner">
             <div class="page-header">
                 <h3 class="fw-bold mb-3">Transaksi</h3>
+                <ul class="breadcrumbs mb-3">
+                    <li class="nav-home">
+                        <a href="{{ route('admin.transaksi') }}">
+                            <i class="icon-home"></i>
+                        </a>
+                    </li>
+                    <li class="separator">
+                        <i class="icon-arrow-right"></i>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('admin.transaksi') }}">Tables</a>
+                    </li>
+                    <li class="separator">
+                        <i class="icon-arrow-right"></i>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('admin.transaksi') }}">Tables</a>
+                    </li>
+                </ul>
             </div>
 
             <!-- Main content -->
@@ -60,7 +79,7 @@
                                             <th>Tanggal</th>
                                             <th>Kode Akun</th>
                                             <th>Keterangan</th>
-                                            <th>Rekening</th>
+                                            <th>Kas/Bank</th>
                                             <th>Jumlah</th>
                                             <th>Status</th>
                                             <th>Aksi</th>
@@ -73,7 +92,7 @@
                                                 <td>{{ $transaksis->tanggal_transaksi }}</td>
                                                 <td>{{ $transaksis->akun->kode }} - {{ $transaksis->akun->nama_akun }}</td>
                                                 <td>{{ $transaksis->keterangan }}</td>
-                                                <td>{{ $transaksis->rekening }}</td>
+                                                <td>{{ $transaksis->kas_bank }}</td>
                                                 <td>{{ $transaksis->jumlah }}</td>
                                                 <td>
                                                     @if ($transaksis->status === 'draf')
@@ -86,17 +105,17 @@
                                                         <span class="badge bg-success">Selesai</span>
                                                     @endif
                                                 </td>
-                                                <td><a href="{{ route('admin.transaksi.edit', ['id' => $transaksis->id]) }}"
-                                                        class="btn btn-info btn-sm"><i
-                                                            class="fas fa-pencil-alt"></i>edit</a>
+                                                <td>
+                                                    <a href="{{ route('admin.transaksi.edit', ['id' => $transaksis->id]) }}"
+                                                        class="btn btn-info btn-sm"><i class="fas fa-pencil-alt"></i>edit</a>
                                                     <form id="delete-form-{{ $transaksis->id }}"
                                                         action="{{ route('admin.transaksi.delete', ['id' => $transaksis->id]) }}"
                                                         method="POST">
                                                         @csrf
                                                         @method('DELETE')
                                                         <button onclick="confirmDelete(event, {{ $transaksis->id }})"
-                                                            type="submit" class="btn btn-sm btn-danger"><i
-                                                                class="fas fa-trash"></i>Hapus</button>
+                                                            type="submit" class="btn btn-sm btn-danger">
+                                                            <i class="fas fa-trash"></i>Hapus</button>
                                                     </form>
                                                 </td>
                                             </tr>

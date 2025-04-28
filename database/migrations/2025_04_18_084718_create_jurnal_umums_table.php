@@ -19,6 +19,7 @@ return new class extends Migration
             $table->double('debit');
             $table->double('kredit');
             $table->text('keterangan');
+            $table->enum('status', ['selesai', 'draf'])->default('draf');
             $table->timestamps();
         });
     }

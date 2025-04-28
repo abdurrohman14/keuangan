@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\Admin\BukuBesarController;
+use App\Http\Controllers\Manajer\BukuBController;
+use App\Http\Controllers\Staf\BBesarController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\JuController;
@@ -12,6 +15,7 @@ use App\Http\Controllers\Staf\JnController;
 use App\Http\Controllers\Manajer\JmController;
 use App\Http\Controllers\Staf\TransaksisController;
 use App\Http\Controllers\Manajer\TransaksismanajerController;
+
 
 Route::get('/', function () {
     return view('auth.login');
@@ -50,6 +54,11 @@ Route::middleware(['auth', 'role:admin'])->group(function() {
     // Jurnal Umum
     Route::prefix('jurnal-umum')->group(function () {
         Route::get('/', [JuController::class, 'index'])->name('admin.jurnal');
+        Route::get('/verifikasi/{id}', [JuController::class, 'verifikasi'])->name('admin.jurnal.verifikasi');
+    });
+     // Buku Besar
+     Route::prefix('admin-buku-besar')->group(function () {
+        Route::get('/', [BukuBesarController::class, 'index'])->name('admin.buku');
     });
 });
 
@@ -80,19 +89,30 @@ Route::middleware(['auth', 'role:stafkeuangan'])->group(function () {
         // Route::put('/{id}/update', [JurnalUmumController::class, 'update'])->name('staf.jurnal.umum.update');
         // Route::delete('/{id}', [JurnalUmamController::class, 'destroy'])->name('staf.jurnal.umum.destroy');
     });
+     // Buku Besar
+     Route::prefix('staf-buku-besar')->group(function () {
+        Route::get('/', [BBesarController::class, 'index'])->name('staf.buku');
+    });
 });
 
 // manajer
 Route::middleware(['auth', 'role:manajer'])->group(function () {
     Route::get('/manajer', [DashboardController::class, 'manajer'])->name('manajer.dashboard');
 
+    // Kode Akun
     Route::prefix('manajer-kode')->group(function () {
         Route::get('/', [kodeController::class, 'index'])->name('manajer.akun');
     });    
+    // Transaksi
     Route::prefix('manajer-transaksi')->group(function () {
         Route::get('/', [TransaksismanajerController::class, 'index'])->name('manajer.transaksi');
     });    
+    // Jurnal Umum
     Route::prefix('manajer-jurnal-umum')->group(function () {
         Route::get('/', [JmController::class, 'index'])->name('manajer.jurnal');
+    });   
+    // Buku Besar
+    Route::prefix('manajer-buku-besar')->group(function () {
+        Route::get('/', [BukuBController::class, 'index'])->name('manajer.buku');
     });   
 });

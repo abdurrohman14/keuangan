@@ -44,10 +44,14 @@
                                             </select>
                                         </div>
                                         <div class="form-group">
-                                            <label for="largeInput">Rekening</label>
-                                            <input type="text" class="form-control form-control" id="defaultInput"
-                                                placeholder="" name="rekening" value="{{ $transaksi->rekening }}" />
+                                            <label for="kas_bank">Kas / Bank</label>
+                                            <select class="form-select" name="kas_bank">
+                                                <option value="Kas" {{ $transaksi->kas_bank == 'Kas' ? 'selected' : '' }}>Kas</option>
+                                                <option value="Bank BCA" {{ $transaksi->kas_bank == 'Bank BCA' ? 'selected' : '' }}>Bank BCA</option>
+                                                <option value="Bank Mandiri" {{ $transaksi->kas_bank == 'Bank Mandiri' ? 'selected' : '' }}>Bank Mandiri</option>
+                                            </select>
                                         </div>
+                                        
                                         <div class="form-group">
                                             <label for="comment">Keterangan</label>
                                             <textarea class="form-control" id="comment" name="keterangan" rows="5">{{ $transaksi->keterangan }}</textarea>

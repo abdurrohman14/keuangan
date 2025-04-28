@@ -61,7 +61,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a data-bs-toggle="collapse" href="#sidebarLayouts">
+                        <a  href="{{ route('admin.buku') }}">
                             <i class="fas fa-book"></i>
                             <p>Buku Besar</p>
                         </a>

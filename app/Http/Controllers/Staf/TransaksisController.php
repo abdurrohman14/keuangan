@@ -49,6 +49,7 @@ class TransaksisController extends Controller
 
     public function store(Request $request)
     {
+        dd($request);
        try{
         $request->validate([
             'akun_id' => 'required|exists:akuns,id',

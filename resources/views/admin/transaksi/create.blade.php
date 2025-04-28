@@ -37,14 +37,19 @@
                                             </select>
                                         </div>
                                         <div class="form-group">
-                                            <label for="largeInput">Rekening</label>
-                                            <input type="text" class="form-control form-control" id="defaultInput"
-                                                placeholder="" name="rekening" />
+                                            <label for="exampleFormControlSelect1">Kas / Bank</label>
+                                            <select class="form-select" id="exampleFormControlSelect1" name="kas_bank">
+                                                @foreach ($kasBank as $kas )
+                                                    <option value="{{ $kas }}">{{ $kas }}</option>
+                                                @endforeach
+                                                {{-- <option value="Kas">Kas</option>
+                                                <option value="Bank BCA">Bank BCA</option>
+                                                <option value="Bank Mandiri">Bank Mandiri</option> --}}
+                                            </select>
                                         </div>
                                         <div class="form-group">
                                             <label for="comment">Keterangan</label>
-                                            <textarea class="form-control" id="comment" name="keterangan" rows="5">
-                  </textarea>
+                                            <textarea class="form-control" id="comment" name="keterangan" rows="5" required></textarea>
                                         </div>
                                         <div class="form-group">
                                             <label for="largeInput">Jumlah</label>

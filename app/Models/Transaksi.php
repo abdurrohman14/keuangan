@@ -12,10 +12,10 @@ class Transaksi extends Model
         'akun_id',
         'tanggal_transaksi', 
         'tipe_transaksi',
-        'rekening',
-        'keterangan',
+        'kas_bank',
         'jumlah',
         'status',
+        'keterangan',
     ];
 
     public function akun(){

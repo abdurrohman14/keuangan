@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('buku_besars', function (Blueprint $table) {
             $table->id();
+            $table->date('tanggal');
+            $table->foreignId('akun_id')->references('id')->on('akuns')->onDelete('cascade');
             $table->foreignId('transaksi_id')->references('id')->on('transaksis')->onDelete('cascade');
             $table->float('debit');
             $table->float('kredit');
